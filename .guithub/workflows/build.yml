@@ -1,0 +1,25 @@
+name: Build WhatsApp Sender APK (Simple)
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Build APK using pre-configured action
+      uses: ArtiomTr/buildozer-action@v1
+      with:
+        command: buildozer android debug
+        
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: whatsapp-sender-apk
+        path: bin/*.apk
